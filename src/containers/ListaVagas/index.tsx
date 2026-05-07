@@ -1,12 +1,11 @@
 import { useState } from 'react'
 import FormVagas from '../../components/FormVagas'
-
 import Vaga from '../../components/Vaga'
 
-import styles from './ListaVagas.module.css'
+import { VagasGrid } from './styles' // Importa o novo componente estilizado
 
-type Vaga = {
-  id: string
+type VagaType = {
+  id: number
   titulo: string
   localizacao: string
   nivel: string
@@ -16,7 +15,7 @@ type Vaga = {
   requisitos: string[]
 }
 
-const vagas = [
+const vagas: VagaType[] = [
   {
     id: 1,
     titulo: 'Desenvolvedor front-end',
@@ -93,13 +92,13 @@ const ListaVagas = () => {
   const [filtro, setFiltro] = useState<string>('')
 
   const vagasFiltradas = vagas.filter(
-    (x) => x.titulo.toLocaleLowerCase().search(filtro) >= 0
+    (x) => x.titulo.toLocaleLowerCase().search(filtro.toLocaleLowerCase()) >= 0
   )
 
   return (
     <div>
       <FormVagas aoPesquisar={(termo: string) => setFiltro(termo)} />
-      <ul className={styles.vagas}>
+      <VagasGrid> {/* Substituído: de <ul className={styles.vagas}> para <VagasGrid> */}
         {vagasFiltradas.map((vag) => (
           <Vaga
             key={vag.id}
@@ -112,7 +111,7 @@ const ListaVagas = () => {
             requisitos={vag.requisitos}
           />
         ))}
-      </ul>
+      </VagasGrid>
     </div>
   )
 }
